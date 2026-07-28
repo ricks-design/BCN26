@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Packliste · Barcelona 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F3ED;
+    --card:#FFFFFF;
+    --ink:#1C1A17;
+    --muted:#6E6960;
+    --line:#E3DDD2;
+    --sea:#0E6A72;
+    --sea-soft:#DFEDEE;
+    --blaze:#C2521F;
+    --blaze-soft:#F7E7DD;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Barlow',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.4;
+    padding:20px 14px 90px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+
+  /* ---------- Header ---------- */
+  header{margin-bottom:14px;text-align:center}
+  .eyebrow{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;font-size:13px;color:var(--blaze);margin-bottom:2px;
+  }
+  h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:36px;line-height:1.05;letter-spacing:.01em}
+  .sub{color:var(--muted);font-size:15px;margin-top:4px}
+
+  /* ---------- Fortschritt ---------- */
+  .progress{margin:18px 0 22px;display:flex;align-items:center;justify-content:center;gap:16px}
+  .pct-ring{flex:0 0 auto;width:78px;height:78px;position:relative}
+  .pct-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .pct-ring circle{fill:none;stroke-width:6}
+  .pct-ring .bg{stroke:var(--line)}
+  .pct-ring .fg{stroke:var(--sea);stroke-linecap:round;transition:stroke-dashoffset .35s ease}
+  .pct-num{position:absolute;inset:0;display:grid;place-items:center;
+    font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--ink)}
+  #totalCount{font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--muted)}
+  #totalCount strong{color:var(--ink);font-weight:700}
+
+  /* ---------- Grid ---------- */
+  #lists{column-width:340px;column-gap:16px}
+  .cat{
+    display:inline-block;width:100%;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:12px 12px 8px;margin:0 0 16px;vertical-align:top;
+  }
+  .cat.worn{background:var(--sea-soft);border-color:#C9E0E1}
+  .cat.dragging{opacity:.55}
+  .cat.pre-departure{
+    display:block;column-span:all;width:100%;margin-top:8px;
+    background:var(--blaze-soft);border:1.5px dashed var(--blaze);
+  }
+  .cat.pre-departure .cat-title{color:var(--blaze)}
+  .cat.pre-departure .box{border-color:#E0AD8C}
+  .cat.pre-departure .item.done .box{background:var(--blaze);border-color:var(--blaze)}
+  #lists{position:relative}
+  .cat-head{display:flex;align-items:center;gap:8px;padding:0 2px 8px;border-bottom:1px solid var(--line);margin-bottom:6px}
+  .drag{
+    flex:0 0 auto;width:22px;height:26px;display:grid;place-items:center;cursor:grab;
+    color:#B9B2A6;touch-action:none;background:none;border:0;
+  }
+  .drag svg{width:14px;height:14px;fill:currentColor}
+  .cat-title{
+    flex:1;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;
+    letter-spacing:.03em;text-transform:uppercase;
+  }
+  .cat-count{font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--muted);letter-spacing:.06em}
+
+  /* ---------- Zeilen ---------- */
+  .item{display:flex;align-items:flex-start;gap:10px;padding:7px 2px;border-bottom:1px solid #F0ECE4}
+  .item:last-of-type{border-bottom:0}
+  .box{
+    flex:0 0 auto;width:21px;height:21px;margin-top:1px;border:1.5px solid #C4BCAE;border-radius:6px;
+    background:#fff;display:grid;place-items:center;cursor:pointer;transition:.15s;
+  }
+  .box svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;
+    stroke-linejoin:round;opacity:0;transform:scale(.6);transition:.15s}
+  .item.done .box{background:var(--sea);border-color:var(--sea)}
+  .item.done .box svg{opacity:1;transform:scale(1)}
+  .label{flex:1;cursor:pointer;min-width:0}
+  .item.done .label{color:#A8A196;text-decoration:line-through;text-decoration-color:#CFC8BC}
+  .note{display:block;font-size:13.5px;color:var(--muted);line-height:1.3}
+  .item.done .note{color:#BCB5A9}
+  .qty{
+    flex:0 0 auto;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:14px;
+    color:var(--sea);background:var(--sea-soft);border-radius:99px;padding:1px 8px;margin-top:2px;
+  }
+  .item.done .qty{color:#A8A196;background:#F0ECE4}
+
+  .tools{flex:0 0 auto;display:flex;gap:2px;opacity:0;transition:opacity .15s}
+  .item:hover .tools,.item:focus-within .tools{opacity:1}
+  @media (hover:none){.tools{opacity:.55}}
+  .iconbtn{
+    width:26px;height:26px;border:0;background:none;border-radius:7px;cursor:pointer;
+    display:grid;place-items:center;color:#A8A196;
+  }
+  .iconbtn:hover{background:#F2EEE6;color:var(--ink)}
+  .iconbtn.del:hover{background:var(--blaze-soft);color:var(--blaze)}
+  .iconbtn svg{width:15px;height:15px;fill:currentColor}
+  .iconbtn.del{font-size:19px;line-height:1;font-family:'Barlow',sans-serif}
+
+  /* ---------- Editor ---------- */
+  .editrow{padding:8px 2px;border-bottom:1px solid #F0ECE4}
+  .editrow .line{display:flex;gap:6px;margin-bottom:6px}
+  input[type=text],input[type=number]{
+    font-family:'Barlow',sans-serif;font-size:15px;color:var(--ink);background:#FBF9F5;
+    border:1px solid var(--line);border-radius:8px;padding:6px 9px;width:100%;
+  }
+  input:focus{outline:2px solid var(--sea);outline-offset:1px;background:#fff}
+  input.qtyin{width:74px;flex:0 0 auto;text-align:center}
+  .editrow .hint{font-size:12.5px;color:var(--muted)}
+
+  /* ---------- Neu-Eingabe ---------- */
+  .addrow{display:flex;gap:6px;align-items:center;padding:8px 2px 2px}
+  .addrow input{background:transparent;border:1px dashed var(--line)}
+  .addbtn{
+    flex:0 0 auto;width:30px;height:30px;border:1px solid var(--line);background:#fff;border-radius:8px;
+    color:var(--sea);font-size:19px;line-height:1;cursor:pointer;
+  }
+  .addbtn:hover{background:var(--sea);color:#fff;border-color:var(--sea)}
+
+  .newcat{
+    display:flex;gap:6px;align-items:center;background:var(--card);border:1px dashed var(--line);
+    border-radius:var(--radius);padding:10px 12px;margin-top:2px;
+  }
+
+  /* ---------- Buttonleiste ---------- */
+  .bar{
+    position:fixed;left:0;right:0;bottom:0;background:rgba(246,243,237,.94);
+    backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:9px 14px;
+    display:flex;gap:8px;justify-content:center;flex-wrap:wrap;z-index:20;
+  }
+  .btn{
+    font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;letter-spacing:.06em;
+    text-transform:uppercase;padding:8px 14px;border-radius:9px;border:1px solid var(--line);
+    background:#fff;color:var(--ink);cursor:pointer;
+  }
+  .btn.primary{background:var(--sea);border-color:var(--sea);color:#fff}
+  .btn.warn{color:var(--blaze)}
+  #saveNote{width:100%;text-align:center;font-size:13px;color:var(--sea);min-height:0}
+
+  footer{text-align:center;color:#B9B2A6;font-family:'Barlow Condensed',sans-serif;
+    letter-spacing:.18em;text-transform:uppercase;font-size:13px;margin-top:22px}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">6 Nächte · nur Handgepäck</div>
+  <h1>Barcelona</h1>
+  <div class="sub">30.07.–05.08.2026 · Trolley 55×40×20 + kleiner Rucksack</div>
+</header>
+
+<div class="progress">
+  <div class="pct-ring">
+    <svg viewBox="0 0 84 84">
+      <circle class="bg" cx="42" cy="42" r="36"/>
+      <circle class="fg" id="progRing" cx="42" cy="42" r="36"/>
+    </svg>
+    <div class="pct-num" id="pctNum">0%</div>
+  </div>
+  <div id="totalCount"></div>
+</div>
+
+<div id="lists"></div>
+
+<div class="newcat">
+  <input type="text" id="newCatInput" placeholder="Kategorie anlegen …">
+  <button class="addbtn" id="newCatBtn" title="Kategorie hinzufügen">+</button>
+</div>
+
+<footer>BCN · 7 Nächte</footer>
+
+<div class="bar">
+  <button class="btn primary" id="exportBtn">In Datei speichern</button>
+  <button class="btn" id="resetBtn">Haken zurücksetzen</button>
+  <button class="btn warn" id="restoreBtn">Originalliste</button>
+  <div id="saveNote"></div>
+</div>
+
+<script id="packdata" type="application/json">
+[
+ {
+  "id": "koerper",
+  "title": "Am Körper (Flug)",
+  "worn": true,
+  "items": [
+   {
+    "id": "b1",
+    "n": "Leinenhemd oder T-Shirt",
+    "done": false
+   },
+   {
+    "id": "b2",
+    "n": "Chino / leichte Hose",
+    "done": false
+   },
+   {
+    "id": "b3",
+    "n": "Sneaker",
+    "done": false
+   },
+   {
+    "id": "b4",
+    "n": "Overshirt / leichte Jacke",
+    "done": false
+   },
+   {
+    "id": "b5",
+    "n": "Sonnenbrille",
+    "done": false
+   },
+   {
+    "id": "b6",
+    "n": "Uhr",
+    "done": false
+   },
+   {
+    "id": "b7",
+    "n": "Handy",
+    "done": false
+   },
+   {
+    "id": "b8",
+    "n": "Geldbörse",
+    "done": false
+   },
+   {
+    "id": "b9",
+    "n": "Kamera am Gurt",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "kleidung",
+  "title": "Kleidung",
+  "items": [
+   {
+    "id": "c1",
+    "n": "T-Shirt",
+    "q": 5,
+    "done": false
+   },
+   {
+    "id": "c2",
+    "n": "Leinenhemd",
+    "q": 2,
+    "done": false
+   },
+   {
+    "id": "c3",
+    "n": "Kurze Hose",
+    "q": 2,
+    "done": false
+   },
+   {
+    "id": "c4",
+    "n": "Leichte Stoffhose",
+    "done": false
+   },
+   {
+    "id": "c5",
+    "n": "Ausgeh-Outfit",
+    "done": false
+   },
+   {
+    "id": "c6",
+    "n": "Unterhose",
+    "q": 8,
+    "done": false
+   },
+   {
+    "id": "c7",
+    "n": "Socken",
+    "q": 5,
+    "done": false
+   },
+   {
+    "id": "c8",
+    "n": "Badehose",
+    "done": false
+   },
+   {
+    "id": "c9",
+    "n": "Leichter Pullover",
+    "done": false
+   },
+   {
+    "id": "c10",
+    "n": "Espadrilles / leichte Sneaker",
+    "done": false
+   },
+   {
+    "id": "c11",
+    "n": "Slides",
+    "done": false
+   },
+   {
+    "id": "c12",
+    "n": "Cap",
+    "done": false
+   },
+   {
+    "id": "c13",
+    "n": "Ultraleichte Regenjacke",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "laufen",
+  "title": "Laufen",
+  "items": [
+   {
+    "id": "r1",
+    "n": "Laufschuhe",
+    "done": false
+   },
+   {
+    "id": "r2",
+    "n": "Laufshirt",
+    "q": 3,
+    "done": false
+   },
+   {
+    "id": "r3",
+    "n": "Laufshorts",
+    "q": 2,
+    "done": false
+   },
+   {
+    "id": "r4",
+    "n": "Laufsocken",
+    "q": 3,
+    "done": false
+   },
+   {
+    "id": "r5",
+    "n": "Sportuhr + Ladekabel",
+    "done": false
+   },
+   {
+    "id": "r6",
+    "n": "Pulsgurt",
+    "done": false
+   },
+   {
+    "id": "r7",
+    "n": "Helle Laufcap",
+    "done": false
+   },
+   {
+    "id": "r8",
+    "n": "Anti-Chafing-Stick",
+    "done": false
+   },
+   {
+    "id": "r9",
+    "n": "Handflask",
+    "done": false
+   },
+   {
+    "id": "r10",
+    "n": "Stirnlampe",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "foto",
+  "title": "Fotoausrüstung",
+  "items": [
+   {
+    "id": "f1",
+    "n": "Body",
+    "done": false
+   },
+   {
+    "id": "f2",
+    "n": "Standardzoom / 35 mm",
+    "done": false
+   },
+   {
+    "id": "f3",
+    "n": "Weitwinkel",
+    "done": false
+   },
+   {
+    "id": "f4",
+    "n": "Tele oder 85 mm",
+    "done": false
+   },
+   {
+    "id": "f5",
+    "n": "Akku",
+    "q": 3,
+    "done": false
+   },
+   {
+    "id": "f6",
+    "n": "Ladegerät / USB-C",
+    "done": false
+   },
+   {
+    "id": "f7",
+    "n": "SD-Karten",
+    "q": 3,
+    "done": false
+   },
+   {
+    "id": "f8",
+    "n": "Kartenleser",
+    "done": false
+   },
+   {
+    "id": "f9",
+    "n": "Reisestativ",
+    "done": false
+   },
+   {
+    "id": "f10",
+    "n": "Polfilter",
+    "done": false
+   },
+   {
+    "id": "f11",
+    "n": "Blasebalg + Mikrofasertuch",
+    "done": false
+   },
+   {
+    "id": "f12",
+    "n": "Kameragurt",
+    "done": false
+   },
+   {
+    "id": "f13",
+    "n": "Gepolsterter Kamera-Insert",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "technik",
+  "title": "Technik",
+  "items": [
+   {
+    "id": "t1",
+    "n": "Ladekabel Handy",
+    "done": false
+   },
+   {
+    "id": "t2",
+    "n": "Mehrfach-USB-Netzteil",
+    "done": false
+   },
+   {
+    "id": "t3",
+    "n": "Powerbank",
+    "done": false
+   },
+   {
+    "id": "t4",
+    "n": "Kopfhörer",
+    "done": false
+   },
+   {
+    "id": "t5",
+    "n": "E-Reader / Buch",
+    "done": false
+   },
+   {
+    "id": "t6",
+    "n": "AirTag im Trolley",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "wasch",
+  "title": "Waschbeutel",
+  "items": [
+   {
+    "id": "w1",
+    "n": "Zahnbürste + Zahnpasta",
+    "done": false
+   },
+   {
+    "id": "w2",
+    "n": "Deo",
+    "done": false
+   },
+   {
+    "id": "w3",
+    "n": "Duschgel / Shampoo 100 ml",
+    "done": false
+   },
+   {
+    "id": "w4",
+    "n": "Sonnencreme LSF 50",
+    "done": false
+   },
+   {
+    "id": "w5",
+    "n": "After Sun",
+    "done": false
+   },
+   {
+    "id": "w6",
+    "n": "Lippenbalsam mit LSF",
+    "done": false
+   },
+   {
+    "id": "w7",
+    "n": "Kontaktlinsen + Lösung",
+    "done": false
+   },
+   {
+    "id": "w8",
+    "n": "Brille",
+    "done": false
+   },
+   {
+    "id": "w9",
+    "n": "Rasierer",
+    "done": false
+   },
+   {
+    "id": "w10",
+    "n": "Nagelschere",
+    "done": false
+   },
+   {
+    "id": "w11",
+    "n": "Mückenschutz",
+    "done": false
+   },
+   {
+    "id": "w12",
+    "n": "Waschmittel-Blätter",
+    "done": false
+   },
+   {
+    "id": "w13",
+    "n": "1-Liter-Zipbeutel",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "apo",
+  "title": "Apotheke",
+  "items": [
+   {
+    "id": "a1",
+    "n": "Persönliche Medikamente",
+    "done": false
+   },
+   {
+    "id": "a2",
+    "n": "Ibuprofen",
+    "done": false
+   },
+   {
+    "id": "a3",
+    "n": "Loperamid",
+    "done": false
+   },
+   {
+    "id": "a4",
+    "n": "Elektrolytpulver",
+    "done": false
+   },
+   {
+    "id": "a5",
+    "n": "Antihistaminikum",
+    "done": false
+   },
+   {
+    "id": "a6",
+    "n": "Blasenpflaster",
+    "done": false
+   },
+   {
+    "id": "a7",
+    "n": "Pflaster / Wundschnellverband",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "doku",
+  "title": "Dokumente & Geld",
+  "items": [
+   {
+    "id": "d1",
+    "n": "Personalausweis",
+    "done": false
+   },
+   {
+    "id": "d2",
+    "n": "Kreditkarte",
+    "done": false
+   },
+   {
+    "id": "d3",
+    "n": "Bargeld ca. 100 €",
+    "done": false
+   },
+   {
+    "id": "d4",
+    "n": "EHIC / Versichertenkarte",
+    "done": false
+   },
+   {
+    "id": "d5",
+    "n": "Bordkarten offline gespeichert",
+    "done": false
+   },
+   {
+    "id": "d6",
+    "n": "Buchungsbestätigung Unterkunft",
+    "done": false
+   },
+   {
+    "id": "d7",
+    "n": "Zeitfenster-Tickets",
+    "done": false
+   },
+   {
+    "id": "d8",
+    "n": "Auslandsreisekrankenversicherung",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "tag",
+  "title": "Tagesrucksack",
+  "items": [
+   {
+    "id": "g1",
+    "n": "Faltbarer Tagesrucksack",
+    "done": false
+   },
+   {
+    "id": "g2",
+    "n": "Trinkflasche",
+    "done": false
+   },
+   {
+    "id": "g3",
+    "n": "Mikrofaser-Handtuch",
+    "done": false
+   },
+   {
+    "id": "g4",
+    "n": "Wasserdichter Zipbeutel",
+    "done": false
+   },
+   {
+    "id": "g5",
+    "n": "Kleines Vorhängeschloss",
+    "done": false
+   },
+   {
+    "id": "g6",
+    "n": "Faltbare Einkaufstasche",
+    "done": false
+   }
+  ]
+ },
+ {
+  "id": "abflug",
+  "title": "Vor dem Abflug",
+  "predeparture": true,
+  "items": [
+   {
+    "id": "p1",
+    "n": "Online-Check-in",
+    "done": false
+   },
+   {
+    "id": "p2",
+    "n": "Trolley wiegen",
+    "done": false
+   },
+   {
+    "id": "p3",
+    "n": "Akkus & Powerbank ins Handgepäck",
+    "done": false
+   },
+   {
+    "id": "p4",
+    "n": "Flüssigkeiten im 1-L-Beutel griffbereit",
+    "done": false
+   },
+   {
+    "id": "p5",
+    "n": "Offline-Karte Barcelona laden",
+    "done": false
+   },
+   {
+    "id": "p6",
+    "n": "Speicherkarten formatieren",
+    "done": false
+   },
+   {
+    "id": "p7",
+    "n": "Wohnung: Müll, Fenster, Kühlschrank",
+    "done": false
+   }
+  ]
+ }
+]
+</script>
+
+<script>
+const STORAGE_KEY = 'packliste-barcelona-2026-v1';
+let data = null, editingId = null, editingCat = null;
+
+function embeddedData(){ try{ return JSON.parse(document.getElementById('packdata').textContent); }catch(e){ return []; } }
+function uid(){ return 'i' + Math.random().toString(36).slice(2,9); }
+function esc(s){ const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+async function loadData(){
+  if (typeof window.storage !== 'undefined'){
+    try{ const res = await window.storage.get(STORAGE_KEY); if(res && res.value){ data = JSON.parse(res.value); return; } }catch(e){}
+  }
+  try{ const raw = localStorage.getItem(STORAGE_KEY); if(raw){ data = JSON.parse(raw); return; } }catch(e){}
+  data = embeddedData();
+}
+async function saveData(){
+  const json = JSON.stringify(data);
+  if (typeof window.storage !== 'undefined'){
+    try{ await window.storage.set(STORAGE_KEY, json); }catch(e){}
+  }
+  try{ localStorage.setItem(STORAGE_KEY, json); }catch(e){}
+}
+
+/* "Socken 3x" oder "3x Socken" -> Menge */
+function parseQty(str){
+  const s = String(str || '').trim();
+  let m = s.match(/^(.*\S)\s+(\d+)\s*x$/i) || s.match(/^(\d+)\s*x\s+(.*\S)$/i);
+  if(!m) return {n:s, q:null};
+  const a = parseInt(m[1], 10), b = parseInt(m[2], 10);
+  if(!isNaN(b)) return {n:m[1].trim(), q:(b>1?b:null)};
+  return {n:m[2].trim(), q:(a>1?a:null)};
+}
+
+const CHECK  = '<svg viewBox="0 0 16 16"><path d="M3 8.5 6.5 12 13 4"/></svg>';
+const PENCIL = '<svg viewBox="0 0 20 20"><path d="M13.6 2.9 17.1 6.4 7.3 16.2 3 17l.8-4.3 9.8-9.8z"/></svg>';
+const GRIP   = '<svg viewBox="0 0 16 16"><circle cx="5" cy="3" r="1.4"/><circle cx="11" cy="3" r="1.4"/><circle cx="5" cy="8" r="1.4"/><circle cx="11" cy="8" r="1.4"/><circle cx="5" cy="13" r="1.4"/><circle cx="11" cy="13" r="1.4"/></svg>';
+
+function findCat(cid){ return data.find(c => c.id === cid); }
+function findItem(cid, iid){ const c = findCat(cid); return c ? c.items.find(i => i.id === iid) : null; }
+
+function itemHTML(cat, it){
+  if(editingId === it.id){
+    return '<div class="editrow" data-cat="' + cat.id + '" data-item="' + it.id + '">' +
+      '<div class="line">' +
+        '<input type="text" class="namein" value="' + esc(it.n) + '" placeholder="Bezeichnung">' +
+        '<input type="number" class="qtyin" min="1" value="' + (it.q || 1) + '">' +
+      '</div>' +
+      '<div class="line"><input type="text" class="notein" value="' + esc(it.note || '') + '" placeholder="Anmerkung (optional)"></div>' +
+      '<div class="hint">Enter speichert · Esc bricht ab</div>' +
+    '</div>';
+  }
+  return '<div class="item' + (it.done ? ' done' : '') + '" data-cat="' + cat.id + '" data-item="' + it.id + '">' +
+    '<div class="box" data-act="toggle">' + CHECK + '</div>' +
+    '<div class="label" data-act="toggle">' + esc(it.n) +
+      (it.note ? '<span class="note">' + esc(it.note) + '</span>' : '') + '</div>' +
+    ((it.q && it.q > 1) ? '<span class="qty">' + it.q + '×</span>' : '') +
+    '<div class="tools">' +
+      '<button class="iconbtn" data-act="edit" title="Bearbeiten">' + PENCIL + '</button>' +
+      '<button class="iconbtn del" data-act="del" title="Löschen">×</button>' +
+    '</div></div>';
+}
+
+function catHTML(cat){
+  const done = cat.items.filter(i => i.done).length;
+  const head = (editingCat === cat.id)
+    ? '<div class="cat-head"><input type="text" class="catin" value="' + esc(cat.title) + '">' +
+      '<button class="iconbtn del" data-act="catdel" title="Kategorie löschen">×</button></div>'
+    : '<div class="cat-head">' +
+      '<button class="drag" data-act="drag" title="Verschieben">' + GRIP + '</button>' +
+      '<div class="cat-title" data-act="catedit">' + esc(cat.title) + '</div>' +
+      '<div class="cat-count">' + done + '/' + cat.items.length + '</div></div>';
+
+  return '<section class="cat' + (cat.worn ? ' worn' : '') + (cat.predeparture ? ' pre-departure' : '') + '" data-cat="' + cat.id + '">' + head +
+    cat.items.map(i => itemHTML(cat, i)).join('') +
+    '<div class="addrow"><input type="text" class="addin" placeholder="Neuer Eintrag …">' +
+    '<button class="addbtn" data-act="add" title="Hinzufügen">+</button></div></section>';
+}
+
+function render(){
+  document.getElementById('lists').innerHTML = data.map(catHTML).join('');
+  let total = 0, done = 0;
+  data.forEach(c => { total += c.items.length; done += c.items.filter(i => i.done).length; });
+  const pct = total ? done / total : 0;
+  const ring = document.getElementById('progRing');
+  const circ = 2 * Math.PI * 36;
+  ring.style.strokeDasharray = circ;
+  ring.style.strokeDashoffset = circ * (1 - pct);
+  document.getElementById('pctNum').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('totalCount').innerHTML =
+    '<strong>' + done + '</strong> von ' + total + ' gepackt · ' + Math.round(pct * 100) + ' %';
+  const focus = document.querySelector('.namein, .catin');
+  if(focus){ focus.focus(); focus.select(); }
+}
+
+/* ---------- Interaktion ---------- */
+const lists = document.getElementById('lists');
+
+lists.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]');
+  if(!t) return;
+  const act = t.getAttribute('data-act');
+  const row = t.closest('[data-item]');
+  const sec = t.closest('[data-cat]');
+  const cid = sec ? sec.getAttribute('data-cat') : null;
+
+  if(act === 'toggle'){
+    const it = findItem(cid, row.getAttribute('data-item'));
+    it.done = !it.done; saveData(); render();
+  } else if(act === 'edit'){
+    editingId = row.getAttribute('data-item'); editingCat = null; render();
+  } else if(act === 'del'){
+    const cat = findCat(cid), iid = row.getAttribute('data-item');
+    cat.items = cat.items.filter(i => i.id !== iid);
+    editingId = null; saveData(); render();
+  } else if(act === 'catedit'){
+    editingCat = cid; editingId = null; render();
+  } else if(act === 'catdel'){
+    const cat = findCat(cid);
+    if(confirm('Kategorie „' + cat.title + '“ mit allen Einträgen löschen?')){
+      data = data.filter(c => c.id !== cid); editingCat = null; saveData(); render();
+    }
+  } else if(act === 'add'){
+    commitAdd(sec.querySelector('.addin'), cid);
+  }
+});
+
+function commitEdit(save){
+  const box = document.querySelector('.editrow');
+  if(box && save){
+    const it = findItem(box.getAttribute('data-cat'), box.getAttribute('data-item'));
+    const name = box.querySelector('.namein').value.trim();
+    const q = parseInt(box.querySelector('.qtyin').value, 10);
+    const note = box.querySelector('.notein').value.trim();
+    if(name){ it.n = name; it.q = (q > 1 ? q : null); it.note = note || ''; }
+  }
+  const cin = document.querySelector('.catin');
+  if(cin && save){
+    const cat = findCat(cin.closest('[data-cat]').getAttribute('data-cat'));
+    const v = cin.value.trim(); if(v) cat.title = v;
+  }
+  editingId = null; editingCat = null;
+  if(save) saveData();
+  render();
+}
+
+function commitAdd(input, cid){
+  const raw = input.value.trim(); if(!raw) return;
+  const p = parseQty(raw);
+  findCat(cid).items.push({id: uid(), n: p.n, q: p.q, note: '', done: false});
+  input.value = ''; saveData(); render();
+  const next = document.querySelector('[data-cat="' + cid + '"] .addin');
+  if(next) next.focus();
+}
+
+lists.addEventListener('keydown', e => {
+  if(e.target.classList.contains('addin')){
+    if(e.key === 'Enter'){ e.preventDefault(); commitAdd(e.target, e.target.closest('[data-cat]').getAttribute('data-cat')); }
+    return;
+  }
+  if(e.target.matches('.namein, .qtyin, .notein, .catin')){
+    if(e.key === 'Enter'){ e.preventDefault(); commitEdit(true); }
+    if(e.key === 'Escape'){ e.preventDefault(); commitEdit(false); }
+  }
+});
+lists.addEventListener('focusout', e => {
+  if(!e.target.matches('.namein, .qtyin, .notein, .catin')) return;
+  setTimeout(() => {
+    if(!document.activeElement || !document.activeElement.matches('.namein, .qtyin, .notein, .catin')) commitEdit(true);
+  }, 120);
+});
+
+/* ---------- Kategorien sortieren ---------- */
+let dragId = null;
+lists.addEventListener('pointerdown', e => {
+  const h = e.target.closest('[data-act="drag"]');
+  if(!h) return;
+  e.preventDefault();
+  dragId = h.closest('[data-cat]').getAttribute('data-cat');
+  h.closest('[data-cat]').classList.add('dragging');
+  window.addEventListener('pointermove', onDragMove);
+  window.addEventListener('pointerup', onDragEnd);
+  window.addEventListener('pointercancel', onDragEnd);
+});
+function onDragMove(e){
+  if(!dragId) return;
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  const over = el && el.closest ? el.closest('.cat') : null;
+  if(!over) return;
+  const overId = over.getAttribute('data-cat');
+  if(overId === dragId) return;
+  const from = data.findIndex(c => c.id === dragId);
+  const to = data.findIndex(c => c.id === overId);
+  if(from < 0 || to < 0) return;
+  data.splice(to, 0, data.splice(from, 1)[0]);
+  render();
+  const node = document.querySelector('[data-cat="' + dragId + '"]');
+  if(node) node.classList.add('dragging');
+}
+function onDragEnd(){
+  window.removeEventListener('pointermove', onDragMove);
+  window.removeEventListener('pointerup', onDragEnd);
+  window.removeEventListener('pointercancel', onDragEnd);
+  const node = document.querySelector('[data-cat="' + dragId + '"]');
+  if(node) node.classList.remove('dragging');
+  dragId = null; saveData();
+}
+
+/* ---------- Neue Kategorie ---------- */
+function addCategory(){
+  const inp = document.getElementById('newCatInput');
+  const v = inp.value.trim(); if(!v) return;
+  data.push({id: uid(), title: v, items: []});
+  inp.value = ''; saveData(); render();
+}
+document.getElementById('newCatBtn').addEventListener('click', addCategory);
+document.getElementById('newCatInput').addEventListener('keydown', e => { if(e.key === 'Enter') addCategory(); });
+
+/* ---------- Export ---------- */
+function exportFile(){
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelector('#packdata').textContent = '\n' + JSON.stringify(data, null, 1) + '\n';
+  clone.querySelector('#lists').innerHTML = '';
+  clone.querySelector('#totalCount').innerHTML = '';
+  clone.querySelector('#saveNote').textContent = '';
+  clone.querySelector('#progRing').removeAttribute('style');
+  clone.querySelector('#pctNum').textContent = '0%';
+  const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Packliste_Barcelona_2026.html';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(a.href);
+  const note = document.getElementById('saveNote');
+  note.textContent = 'Neue Datei heruntergeladen – ersetze damit die alte Version.';
+  setTimeout(() => { note.textContent = ''; }, 6000);
+}
+
+document.getElementById('exportBtn').addEventListener('click', exportFile);
+document.getElementById('resetBtn').addEventListener('click', () => {
+  data.forEach(c => c.items.forEach(i => i.done = false)); saveData(); render();
+});
+document.getElementById('restoreBtn').addEventListener('click', () => {
+  if(confirm('Liste auf den Originalzustand zurücksetzen? Eigene Änderungen gehen verloren.')){
+    data = embeddedData(); editingId = null; editingCat = null; saveData(); render();
+  }
+});
+
+(async () => { await loadData(); render(); })();
+</script>
+</body>
+</html>
