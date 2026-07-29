@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barcelona · 30. Juli – 5. August 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F2E7;
+    --paper-2:#FEFBF3;
+    --ink:#152238;
+    --ink-soft:#40506a;
+    --sea:#1F6E8C;
+    --sea-deep:#154b60;
+    --ochre:#D08A24;
+    --line:#e2d9c4;
+    --shadow:0 1px 0 rgba(21,34,56,.04), 0 10px 30px -18px rgba(21,34,56,.35);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--sea-deep);text-underline-offset:2px;text-decoration-thickness:1px}
+  a:hover{color:var(--ink)}
+  :focus-visible{outline:2px solid var(--sea);outline-offset:2px;border-radius:3px}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+
+  /* ---------- HERO / BOARDING PASS ---------- */
+  header.hero{padding:54px 0 30px}
+  .eyebrow{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--sea-deep)}
+  h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(40px,9vw,78px);line-height:.96;letter-spacing:-.02em;margin:.18em 0 .1em}
+  h1 .thin{font-weight:400;color:var(--ink-soft)}
+  .sub{font-size:clamp(15px,2.4vw,18px);color:var(--ink-soft);max-width:46ch}
+
+  .pass{margin-top:26px;background:var(--paper-2);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .pass-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;
+    padding:16px 20px}
+  .pass-row + .pass-row{border-top:1px dashed var(--line)}
+  .leg .code{font-family:"Space Mono",monospace;font-size:12px;color:var(--ochre);font-weight:700;letter-spacing:.08em}
+  .leg .airport{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:26px;line-height:1}
+  .leg .meta{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+  .leg.to{text-align:right}
+  .plane{color:var(--sea);font-size:19px;opacity:.8}
+  .stub{background:var(--sea-deep);color:#fff;padding:12px 20px;display:flex;
+    justify-content:space-between;flex-wrap:wrap;gap:6px 18px;font-size:13px}
+  .stub b{font-family:"Space Mono",monospace;font-weight:700}
+  .stub a{color:#cfeaf3}
+  .stub a:hover{color:#fff}
+
+  /* ---------- NAV ---------- */
+  nav.jump{position:sticky;top:0;z-index:20;background:rgba(247,242,231,.9);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-top:30px}
+  nav.jump .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 22px}
+  nav.jump a{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.04em;
+    white-space:nowrap;padding:6px 11px;border-radius:20px;text-decoration:none;color:var(--ink-soft)}
+  nav.jump a:hover{background:var(--paper-2);color:var(--ink)}
+
+  /* ---------- SECTION ---------- */
+  section{padding:46px 0 8px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+  .sec-num{font-family:"Space Mono",monospace;font-size:13px;color:var(--sea);font-weight:700}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(24px,4.5vw,34px);letter-spacing:-.015em;margin:0;line-height:1.05}
+  .sec-note{color:var(--ink-soft);font-size:14.5px;max-width:60ch;margin:-6px 0 26px}
+
+  /* ---------- DAY ---------- */
+  .day{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:22px 22px 8px;margin-bottom:20px}
+  .day-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:6px}
+  .day-date{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--sea)}
+  .day-title{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:21px;letter-spacing:-.01em}
+  .day-tag{font-size:11.5px;font-family:"Space Mono",monospace;color:var(--ink-soft)}
+
+  .stop{display:grid;grid-template-columns:64px 1fr;gap:14px;padding:13px 0;
+    border-bottom:1px solid var(--line)}
+  .day .stop:last-child{border-bottom:none}
+  .time{font-family:"Space Mono",monospace;font-size:13px;color:var(--ink-soft);padding-top:1px}
+  .time.open{color:#a99b7a}
+  .stop h4{margin:0 0 3px;font-size:16px;font-weight:600;font-family:"Inter",sans-serif;letter-spacing:-.01em}
+  .stop p{margin:0;font-size:14px;color:var(--ink-soft)}
+  .resv .time{color:var(--ochre)}
+  .pill{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ochre);
+    padding:2px 7px;border-radius:20px;vertical-align:middle;margin-left:8px}
+  .maps{font-family:"Space Mono",monospace;font-size:11.5px;white-space:nowrap}
+  .maps::before{content:"↳ ";opacity:.6}
+
+  /* ---------- CALLOUT ---------- */
+  .callout{border:1px solid var(--line);border-left:4px solid var(--sea);
+    background:linear-gradient(180deg,rgba(31,110,140,.05),transparent);
+    border-radius:10px;padding:16px 18px;margin:6px 0 24px;font-size:14px}
+  .callout b{font-family:"Bricolage Grotesque",sans-serif}
+  .callout.warn{border-left-color:var(--ochre)}
+
+  /* ---------- CARD GRID ---------- */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .card{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
+    padding:16px 17px;box-shadow:var(--shadow)}
+  .card h4{margin:0 0 4px;font-size:16px;font-weight:600;letter-spacing:-.01em;
+    display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .card p{margin:0 0 8px;font-size:13.5px;color:var(--ink-soft)}
+  .card .maps{color:var(--sea-deep)}
+  .kicker{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--sea);display:block;margin-bottom:9px}
+
+  /* coffee two-col lists */
+  .coffee{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .coffee ul{list-style:none;margin:8px 0 0;padding:0}
+  .coffee li{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;
+    display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+  .coffee li span{color:var(--ink-soft);font-size:12px}
+  .coffee a{font-weight:500}
+
+  footer{padding:44px 0 60px;color:var(--ink-soft);font-size:12.5px;
+    border-top:1px solid var(--line);margin-top:40px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media (max-width:640px){
+    .pass-row{grid-template-columns:1fr auto 1fr}
+    .leg .airport{font-size:22px}
+    .grid,.coffee{grid-template-columns:1fr}
+    .stop{grid-template-columns:52px 1fr;gap:10px}
+    h1{font-size:clamp(34px,12vw,54px)}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .day,.card,.pass{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Reiseplan · 2 Personen</div>
+    <h1>Barcelona<br><span class="thin">sieben Tage am Meer</span></h1>
+    <p class="sub">Do 30. Juli – Mi 5. August 2026. Basis: Poblenou, zwei Minuten vom Bogatell-Strand. Kultur, Gastronomie, Küste und ein paar gute Kaffees.</p>
+
+    <div class="pass" aria-label="Flüge">
+      <div class="pass-row">
+        <div class="leg from">
+          <div class="code">FR132 · Ryanair · Do 30.07.</div>
+          <div class="airport">BER</div>
+          <div class="meta">Abflug 06:10</div>
+        </div>
+        <div class="plane">✈</div>
+        <div class="leg to">
+          <div class="code">Hinflug</div>
+          <div class="airport">BCN</div>
+          <div class="meta">Ankunft vormittags</div>
+        </div>
+      </div>
+      <div class="pass-row">
+        <div class="leg from">
+          <div class="code">VY1884 · Vueling · Mi 05.08.</div>
+          <div class="airport">BCN</div>
+          <div class="meta">Abflug 07:10</div>
+        </div>
+        <div class="plane">✈</div>
+        <div class="leg to">
+          <div class="code">Rückflug</div>
+          <div class="airport">BER</div>
+          <div class="meta">Transfer ~04:30</div>
+        </div>
+      </div>
+      <div class="stub">
+        <span>Unterkunft · <b>Carrer de Pamplona 47</b>, Poblenou (nahe Bogatell L4)</span>
+        <a href="https://www.google.com/maps/search/?api=1&query=Carrer+de+Pamplona+47+08005+Barcelona" target="_blank" rel="noopener">In Google Maps öffnen ↗</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Sprungmarken">
+  <div class="wrap">
+    <a href="#plan">Tagesplan</a>
+    <a href="#kueste">Küstenwanderung</a>
+    <a href="#wandern">Wandern im Umland</a>
+    <a href="#laufen">Laufen</a>
+    <a href="#viertel">Stadtteile</a>
+    <a href="#ideen">Weitere Ideen</a>
+    <a href="#kaffee">Third Wave Coffee</a>
+  </div>
+</nav>
+
+<!-- ===================== TAGESPLAN ===================== -->
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Tagesplan</h2></div>
+    <p class="sec-note">Fixtermine sind mit <span class="pill" style="position:static">Reserviert</span> markiert. Bewusst nicht überladen — zwischen den Programmpunkten bleibt Luft für Kaffee, Strand und Treibenlassen.</p>
+
+    <!-- DO -->
+    <article class="day">
+      <div class="day-top">
+        <div><div class="day-date">Do · 30. Juli</div><div class="day-title">Ankunft &amp; Altstadt</div></div>
+        <div class="day-tag">leichter Tag nach früher Anreise</div>
+      </div>
+      <div class="stop"><div class="time open">vorm.</div><div><h4>Ankunft BCN &amp; Check-in Poblenou</h4><p>Vom Flughafen per Aerobús/Rodalies R2 ins Zentrum, dann L4 bis Bogatell. Gepäck ablegen.</p></div></div>
+      <div class="stop"><div class="time open">flex</div><div><h4>Ankommen: Bogatell-Strand + erster Kaffee</h4><p>Kurz durchatmen am Meer, Flat White bei Little Fern. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Little+Fern+Poblenou+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time">14:00</div><div><h4>Walking Tour</h4><p>Geführter Rundgang, voraussichtlich Barri Gòtic / Altstadt (14–16 Uhr).</p></div></div>
+      <div class="stop"><div class="time open">16–19</div><div><h4>El Born &amp; Santa Maria del Mar</h4><p>Mittelalterliche Gassen, kurze Pause im Parc de la Ciutadella. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Santa+Maria+del+Mar+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop resv"><div class="time">20:00</div><div><h4>Glug <span class="pill">Reserviert</span></h4><p>Bib Gourmand, katalanisch-italienische Sharing-Plates, Carrer de París 77. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Glug+Carrer+de+Paris+77+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+    </article>
+
+    <!-- FR -->
+    <article class="day">
+      <div class="day-top">
+        <div><div class="day-date">Fr · 31. Juli</div><div class="day-title">Gràcia &amp; Modernisme</div></div>
+        <div class="day-tag">langer, aber runder Tag</div>
+      </div>
+      <div class="stop"><div class="time open">früh</div><div><h4>Optional: Morgenlauf Bogatell</h4><p>Flach am Wasser, vor der Hitze. Siehe Abschnitt „Laufen".</p></div></div>
+      <div class="stop"><div class="time">~9:00</div><div><h4>Park Güell</h4><p>Zeitfenster-Ticket, früh wegen Hitze &amp; Andrang unbedingt vorbuchen. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Park+G%C3%BCell+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">11–14</div><div><h4>Kaffee in Gràcia</h4><p>SlowMov oder Onna Coffee, dann durch die Plätze schlendern. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=SlowMov+Gr%C3%A0cia+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop resv"><div class="time">14:30</div><div><h4>Oníric <span class="pill">Reserviert</span></h4><p>Bib Gourmand (neu 2026), Lunch. Carrer de Rabassa 37, Gràcia. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=On%C3%ADric+Carrer+de+Rabassa+37+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">16:30</div><div><h4>Gràcia erkunden</h4><p>Casa Vicens optional (Gaudís erstes Haus). Gegen 17:45 zu Fuß Richtung Passeig de Gràcia. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Casa+Vicens+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time">18:00</div><div><h4>La Pedrera — Tagesticket</h4><p>Separates Ticket „Pedrera Esencial" (Patio, Wohnung, Dachboden, Dachterrasse, ~60–75 min). Letzter Einlass 19:00. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=La+Pedrera+Casa+Mil%C3%A0+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop resv"><div class="time">20:00</div><div><h4>Konzert „Talents Jazz" <span class="pill">Ticket</span></h4><p>Auf der Dachterrasse (20:00–22:15), inkl. Dachboden-Zugang + Cava. Eigenes Ticket, vorab online.</p></div></div>
+    </article>
+
+    <!-- SA -->
+    <article class="day">
+      <div class="day-top">
+        <div><div class="day-date">Sa · 1. August</div><div class="day-title">Montjuïc</div></div>
+        <div class="day-tag">Museen mittags gegen die Hitze</div>
+      </div>
+      <div class="stop"><div class="time open">vorm.</div><div><h4>MNAC — Museu Nacional d'Art de Catalunya</h4><p>Romanik &amp; Modernisme im Palau Nacional, Blick über die Stadt. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=MNAC+Museu+Nacional+d%27Art+de+Catalunya" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">→</div><div><h4>Pavelló Mies van der Rohe</h4><p>Der deutsche Expo-Pavillon von 1929 — Ikone der Moderne, 5 Minuten vom MNAC. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Pavelló+Mies+van+der+Rohe+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">→</div><div><h4>Fundació Joan Miró</h4><p>Mirós Werk im hellen Sert-Bau, ebenfalls auf dem Montjuïc — passt in denselben Tag. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Fundació+Joan+Miró+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">spätn.</div><div><h4>Castell de Montjuïc (Seilbahn)</h4><p>Auffahrt mit dem Telefèric, Festung &amp; Rundblick; Gärten auf dem Rückweg. Poble Espanyol optional. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Castell+de+Montjuïc+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop resv"><div class="time">21:00</div><div><h4>La Maroteca – Peix Salvatge <span class="pill">Reserviert</span></h4><p>Fisch &amp; Meeresfrüchte, Carrer de Mallorca 314, Eixample. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=La+Maroteca+Peix+Salvatge+Carrer+de+Mallorca+314+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+    </article>
+
+    <!-- SO -->
+    <article class="day">
+      <div class="day-top">
+        <div><div class="day-date">So · 2. August</div><div class="day-title">Kunst &amp; El Born</div></div>
+        <div class="day-tag">entspannt · 1. Sonntag = Gratis-Museen</div>
+      </div>
+      <div class="stop"><div class="time open">vorm.</div><div><h4>Picasso-Museum</h4><p>Frühwerk in fünf mittelalterlichen Palästen, El Born. Am 1. Sonntag gratis — Reservierung Pflicht, sehr voll, früh buchen. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Museu+Picasso+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">nachm.</div><div><h4>El Born &amp; Gòtic treiben lassen</h4><p>Weinbars, kleine Läden, optional MACBA im Raval. Ruhiger Ausgleich zum vollen Wochenende. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=El+Born+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">→</div><div><h4>Ruderboot im Parc de la Ciutadella</h4><p>Kleine Ruderboote auf dem See, stundenweise — entspannte Pause direkt neben El Born. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Parc+de+la+Ciutadella+llac+barques+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">abends</div><div><h4>Abend frei</h4><p>Sonntags haben viele Bib-Gourmands zu — Glug wäre die Ausnahme, sonst locker in Poblenou essen.</p></div></div>
+    </article>
+
+    <!-- MO -->
+    <article class="day">
+      <div class="day-top">
+        <div><div class="day-date">Mo · 3. August</div><div class="day-title">Küstenwanderung Sant Feliu de Guíxols</div></div>
+        <div class="day-tag">Tagesausflug · Details unten</div>
+      </div>
+      <div class="stop"><div class="time open">früh</div><div><h4>Bus ab Estació del Nord</h4><p>Sarfa/Moventis nach Sant Feliu de Guíxols (~1 h 25). Ticket vorab. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Estaci%C3%B3+del+Nord+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">Tag</div><div><h4>Camí de Ronda → S'Agaró → Sa Conca</h4><p>Felsige Steilküste, Treppen, Miradors, Baden. Dazu Altstadt &amp; Monestir. Siehe Abschnitt „Küstenwanderung". <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Cala+Sa+Conca+S%27Agaró" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">spätn.</div><div><h4>Bus zurück nach Barcelona</h4><p>Rechtzeitig zurück für die Reservierung.</p></div></div>
+      <div class="stop resv"><div class="time">21:45</div><div><h4>Barra Alta <span class="pill">Reserviert</span></h4><p>Michelin „Good cooking", mediterran/Tapas. „Barra Showcooking – High Table". Carrer de Laforja 11, Sant Gervasi. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Barra+Alta+Carrer+de+Laforja+11+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+    </article>
+
+    <!-- DI -->
+    <article class="day">
+      <div class="day-top">
+        <div><div class="day-date">Di · 4. August</div><div class="day-title">Sant Pau, ein Viertel &amp; Bunkers</div></div>
+        <div class="day-tag">Finale mit Sonnenuntergang</div>
+      </div>
+      <div class="stop"><div class="time open">vorm.</div><div><h4>Hospital de Sant Pau (Recinte Modernista)</h4><p>Domènech i Montaners Jugendstil-Klinikstadt — farbige Pavillons, unterschätzt. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Hospital+de+Sant+Pau+Recinte+Modernista+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">nachm.</div><div><h4>Ein Viertel nach Wahl</h4><p>z. B. Sant Antoni + Poble-sec (Tapas-Meile Carrer de Blai) oder entspannt Poblenou + Coffee-Crawl. Siehe „Stadtteile". <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Carrer+de+Blai+Poble-sec+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time">~20:45</div><div><h4>Bunkers del Carmel zum Sonnenuntergang</h4><p>360°-Blick über die Stadt, bester Fotospot. Etwas zu trinken mitnehmen. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Bunkers+del+Carmel+Barcelona" target="_blank" rel="noopener">Maps</a></p></div></div>
+      <div class="stop"><div class="time open">abends</div><div><h4>Abendessen flexibel</h4><p>Letzter Abend — bewusst offen gelassen.</p></div></div>
+    </article>
+
+    <!-- MI -->
+    <article class="day">
+      <div class="day-top">
+        <div><div class="day-date">Mi · 5. August</div><div class="day-title">Abreise</div></div>
+        <div class="day-tag">VY1884 · 07:10</div>
+      </div>
+      <div class="stop"><div class="time">~04:30</div><div><h4>Transfer zum Flughafen</h4><p>Nachts kein Aerobús-Takt prüfen; ggf. Taxi einplanen. Rückflug BCN→BER 07:10.</p></div></div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== KÜSTE ===================== -->
+<section id="kueste">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Küstenwanderung · Sant Feliu de Guíxols</h2></div>
+    <p class="sec-note">Felsige Steilküste an der Costa Brava, car-free machbar. Der schönste Abschnitt ist der Camí de Ronda von S'Agaró nach Sa Conca.</p>
+
+    <div class="callout">
+      <b>Route.</b> Start am Hafen von Sant Feliu (hinter dem Club Nàutic) → Treppen hinauf, Cala Jonca, mehrere Miradors und ein Tunnel-Aussichtspunkt → Strand Sant Pol → Jugendstil-Promenade von <b>S'Agaró</b> (1916, Rafael Masó) → Bucht <b>Sa Conca</b>. Bis Sant Pol ca. 2 km / ~1 h, mit Pausen &amp; Baden ein halber Tag. Gut markiert (GR-92, rot-weiß). Wer mag, geht weiter bis Platja d'Aro.
+    </div>
+    <div class="grid">
+      <div class="card"><span class="kicker">Anreise</span><h4>Bus statt Auto</h4><p>Direktbus Sarfa/Moventis ab Estació del Nord, schnellste Verbindung ~1 h 25, viele Fahrten pro Tag. Ticket vorab buchen.</p><a class="maps" href="https://www.google.com/maps/search/?api=1&query=Sant+Feliu+de+Gu%C3%ADxols+estaci%C3%B3+d%27autobusos" target="_blank" rel="noopener">Busbahnhof Sant Feliu · Maps</a></div>
+      <div class="card"><span class="kicker">Vor Ort</span><h4>Auch sehenswert</h4><p>Monestir de Sant Feliu (Benediktinerkloster, Porta Ferrada) und die Uferpromenade. Startpunkt des Camí liegt ~200 m vom Busbahnhof.</p><a class="maps" href="https://www.google.com/maps/search/?api=1&query=Monestir+de+Sant+Feliu+de+Gu%C3%ADxols" target="_blank" rel="noopener">Monestir · Maps</a></div>
+    </div>
+    <div class="callout warn"><b>August-Hinweis.</b> Im Hochsommer heiß — früh starten, viel Wasser, feste Schuhe (viele Treppen). Werktags ist es deutlich leerer als am Wochenende, deshalb bewusst auf Montag gelegt.</div>
+    <p class="sec-note" style="margin-top:0">Wildere Alternative mit roten Steilfelsen: <b>Begur</b> (Sa Riera → Illa Roja → Sa Tuna → Aiguablava), dramatischer, aber aufwändigere Anreise. <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Cami+de+Ronda+Sa+Tuna+Begur" target="_blank" rel="noopener">Maps</a></p>
+  </div>
+</section>
+
+<!-- ===================== WANDERN ===================== -->
+<section id="wandern">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Wandern im Umland</h2></div>
+    <p class="sec-note">Falls doch noch ein zweiter Tag draußen reizt — Ideen von stadtnah bis Bergtour.</p>
+    <div class="grid">
+      <div class="card"><h4>Montserrat <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Montserrat+Monestir" target="_blank" rel="noopener">Maps</a></span></h4><p>Kloster + Zackenberge; Aufstieg zum Sant Jeroni (höchster Punkt). Kultur &amp; Bergsport in einem. Zahnradbahn/Seilbahn ab Monistrol. Früh starten.</p></div>
+      <div class="card"><h4>Carretera de les Aigües <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Carretera+de+les+Aigües+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Stadtnah im Collserola-Park: flacher Panorama-Schotterweg hoch über Barcelona. Auch top zum Laufen. FGC bis Peu del Funicular.</p></div>
+      <div class="card"><h4>Parc del Garraf <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Parc+del+Garraf" target="_blank" rel="noopener">Maps</a></span></h4><p>Karstige, fast wüstenhafte Küstenberge südlich der Stadt, nahe Sitges. Karg und fotogen.</p></div>
+      <div class="card"><h4>Montseny <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Parc+Natural+del+Montseny" target="_blank" rel="noopener">Maps</a></span></h4><p>Höher gelegenes Biosphärenreservat, kühler, Buchen- und Tannenwälder. Etwas weiter (~1–1,5 h), im Sommer angenehm.</p></div>
+      <div class="card"><h4>Tibidabo / Collserola <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Tibidabo+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Hausberg mit Kirche, historischem Vergnügungspark und weitem Blick; von hier viele Wege durch den Stadtwald.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LAUFEN ===================== -->
+<section id="laufen">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Laufen</h2></div>
+    <p class="sec-note">Ab der Unterkunft in Poblenou bist du in Minuten am Wasser — ideal für Läufe früh am Morgen, bevor es heiß wird.</p>
+    <div class="grid">
+      <div class="card"><span class="kicker">Vor der Haustür</span><h4>Strandpromenade Bogatell → Fòrum <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Passeig+Mar%C3%ADtim+Bogatell+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Flach, direkt am Meer. Richtung Barceloneta/Port Olímpic oder in die ruhigere Gegenrichtung zum Parc del Fòrum. Beliebig verlängerbar.</p></div>
+      <div class="card"><span class="kicker">Zentral &amp; schattig</span><h4>Parc de la Ciutadella <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Parc+de+la+Ciutadella+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Baumreiche Runden, Kaskadenbrunnen, wenig Verkehr. Gut für ein lockeres Wohlfühl-Tempo.</p></div>
+      <div class="card"><span class="kicker">Läufer-Klassiker</span><h4>Carretera de les Aigües <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Carretera+de+les+Aigües+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Flacher Höhen-Schotterweg im Collserola mit Dauerblick über die Stadt. Anreise mit FGC (Peu del Funicular / Vallvidrera).</p></div>
+      <div class="card"><span class="kicker">Höhenmeter</span><h4>Montjuïc <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Montju%C3%AFc+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Anstiege, Gärten und die Runde ums Castell — wer Tempohärte oder Hügel will, wird hier fündig. Schöne Blicke auf Hafen und Meer.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STADTTEILE ===================== -->
+<section id="viertel">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Stadtteile zum Bummeln</h2></div>
+    <p class="sec-note">Über den Plan hinaus — Viertel, die sich zum ziellosen Treibenlassen lohnen.</p>
+    <div class="grid">
+      <div class="card"><h4>El Born / La Ribera <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=El+Born+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Mittelalterliche Gassen, Santa Maria del Mar, das Picasso-Museum, dazu die besten Wein- und Tapas-Bars. Herz der Altstadt.</p></div>
+      <div class="card"><h4>Barri Gòtic <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Barri+G%C3%B2tic+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Gotische Kathedrale, römische Mauerreste und verwinkelte Plätze. Früh morgens am stimmungsvollsten.</p></div>
+      <div class="card"><h4>El Raval <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=El+Raval+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Multikulturell und kreativ-rau: MACBA, Rambla del Raval, gutes internationales Essen. Lebendig und ungeschönt.</p></div>
+      <div class="card"><h4>Gràcia <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Vila+de+Gr%C3%A0cia+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Dorfcharakter mit eigenen Plätzen (Vila de Gràcia, Plaça del Sol), Indie-Läden und Vermut. Steht ohnehin am Freitag an.</p></div>
+      <div class="card"><h4>Sant Antoni <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Sant+Antoni+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Angesagt und entspannt: sanierte Markthalle, sonntags Büchermarkt, viel Brunch und Specialty Coffee.</p></div>
+      <div class="card"><h4>Poble-sec <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Poble-sec+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Unterhalb des Montjuïc, mit der Pintxos-Meile Carrer de Blai. Bodenständig und gut zum Abendessen-Hüpfen.</p></div>
+      <div class="card"><h4>Poblenou <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Poblenou+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Dein Viertel: ehemaliges Industrieareal, heute Design, Studios und Kaffee entlang der Rambla del Poblenou, plus Strände.</p></div>
+      <div class="card"><h4>Barceloneta <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Barceloneta+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Alter Fischerkiez mit engem Raster, Meeresfrüchte-Lokalen und Stadtstrand. Touristisch, aber charaktervoll.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== IDEEN ===================== -->
+<section id="ideen">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Weitere touristische Ideen</h2></div>
+    <p class="sec-note">Puffer für Lücken oder Regen — jeweils mit einem Satz, damit man sich etwas vorstellen kann.</p>
+    <div class="grid">
+      <div class="card"><h4>Casa Batlló <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Casa+Batll%C3%B3+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Gaudís farbenfrohes „Drachenhaus" am Passeig de Gràcia — innen ein organisches Gesamtkunstwerk.</p></div>
+      <div class="card"><h4>Casa Vicens <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Casa+Vicens+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Gaudís erstes Haus, orientalisch-bunt gekachelt, in Gràcia — deutlich weniger überlaufen.</p></div>
+      <div class="card"><h4>Palau de la Música Catalana <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Palau+de+la+M%C3%BAsica+Catalana+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Modernistischer Konzertsaal aus Glas und Mosaik — als Führung oder, noch besser, für ein Sommerkonzert.</p></div>
+      <div class="card"><h4>Mercat de la Boqueria <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Mercat+de+la+Boqueria+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Legendäre Markthalle an der Rambla: Farben, Meeresfrüchte, Snacks an der Theke. Früh hin.</p></div>
+      <div class="card"><h4>El Born CCM <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=El+Born+Centre+de+Cultura+i+Mem%C3%B2ria" target="_blank" rel="noopener">Maps</a></span></h4><p>Unter einer Markthalle: ausgegrabene Stadtstruktur von 1700 — Geschichte zum Drüberlaufen.</p></div>
+      <div class="card"><h4>Font Màgica de Montjuïc <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Font+M%C3%A0gica+de+Montju%C3%AFc" target="_blank" rel="noopener">Maps</a></span></h4><p>Abendliche Wasser- und Lichtshow unterhalb des MNAC (Sommer, ausgewählte Abende). Aktuelle Zeiten prüfen.</p></div>
+      <div class="card"><h4>Girona <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Girona+old+town" target="_blank" rel="noopener">Maps</a></span></h4><p>Mittelalterliche Stadt mit jüdischem Viertel und bunten Häusern am Onyar — Tagesausflug per AVE (~40 min), stark für Kultur &amp; Gastro.</p></div>
+      <div class="card"><h4>Sitges <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Sitges+Spain" target="_blank" rel="noopener">Maps</a></span></h4><p>Mondänes Küstenstädtchen mit Strandpromenade, per Rodalies (~40 min) leicht erreichbar.</p></div>
+      <div class="card"><h4>Tibidabo &amp; CosmoCaixa <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Tibidabo+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Aussichtsberg mit Kirche und historischem Vergnügungspark; unterwegs das große Wissenschaftsmuseum CosmoCaixa.</p></div>
+      <div class="card"><h4>Palo Alto Market <span class="maps"><a href="https://www.google.com/maps/search/?api=1&query=Palo+Alto+Market+Poblenou+Barcelona" target="_blank" rel="noopener">Maps</a></span></h4><p>Design- und Streetfood-Markt in Poblenou an ausgewählten Wochenenden — vorher prüfen, ob offen.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== KAFFEE ===================== -->
+<section id="kaffee">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Third Wave Coffee</h2></div>
+    <p class="sec-note">Die Dichte guter Röstereien ist rund um Poblenou am höchsten — praktisch für den Kaffee nach dem Morgenlauf.</p>
+    <div class="coffee">
+      <div>
+        <span class="kicker">Poblenou · nah an der Unterkunft</span>
+        <ul>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Nomad+Frutas+Selectas+Poblenou+Barcelona" target="_blank" rel="noopener">Nomad · Frutas Selectas</a><span>Top-Rösterei; So oft zu</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Little+Fern+Poblenou+Barcelona" target="_blank" rel="noopener">Little Fern</a><span>NZ-Brunch</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Skye+Coffee+Co+Poblenou+Barcelona" target="_blank" rel="noopener">Skye Coffee Co.</a><span>Industrieareal</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=The+Miners+Coffee+Rambla+del+Poblenou+Barcelona" target="_blank" rel="noopener">The Miners Coffee</a><span>Rambla del Poblenou</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Three+Marks+Coffee+Barcelona" target="_blank" rel="noopener">Three Marks Coffee</a><span>kompetitionsnah</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Right+Side+Coffee+Barcelona" target="_blank" rel="noopener">Right Side Coffee</a><span>Rösterei</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Orval+Buenaventura+Mu%C3%B1oz+31+Barcelona" target="_blank" rel="noopener">Orval</a><span>nahe Ciutadella</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Syra+Coffee+Poblenou+Barcelona" target="_blank" rel="noopener">Syra Coffee</a><span>Take-away-Kiosk</span></li>
+        </ul>
+      </div>
+      <div>
+        <span class="kicker">Stadtweit · lohnt den Umweg</span>
+        <ul>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Cafés+El+Magnífico+Barcelona" target="_blank" rel="noopener">Cafés El Magnífico</a><span>El Born · Bohnenkauf</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Hidden+Coffee+Roasters+Barcelona" target="_blank" rel="noopener">Hidden Coffee Roasters</a><span>El Born</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=LOT+Roasters+Barcelona" target="_blank" rel="noopener">LOT Roasters</a><span>Eixample · Filter</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=SlowMov+Gr%C3%A0cia+Barcelona" target="_blank" rel="noopener">SlowMov</a><span>Gràcia</span></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=Onna+Coffee+Gr%C3%A0cia+Barcelona" target="_blank" rel="noopener">Onna Coffee</a><span>Gràcia</span></li>
+        </ul>
+        <p style="font-size:12.5px;color:var(--ink-soft);margin-top:14px">Hinweis: Espai Joliu (früherer Poblenou-Klassiker) ist geschlossen; der Betreiber führt jetzt Orval.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Barcelona · 30.07.–05.08.2026 · für 2 Personen</span>
+    <span>Öffnungszeiten &amp; August-Ferien vor Ort gegenchecken · Tickets vorab buchen</span>
+  </div>
+</footer>
+
+</body>
+</html>
