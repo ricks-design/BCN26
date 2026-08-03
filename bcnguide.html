@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reiseführer · Palau, Sant Pau &amp; Mies-Pavillon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F2E7;--paper-2:#FEFBF3;--ink:#152238;--ink-soft:#40506a;
+    --sea:#1F6E8C;--sea-deep:#154b60;--ochre:#D08A24;--line:#e2d9c4;
+    --shadow:0 1px 0 rgba(21,34,56,.04), 0 10px 30px -18px rgba(21,34,56,.35);--radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter",system-ui,sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--sea-deep);text-underline-offset:2px}
+  a:hover{color:var(--ink)}
+  :focus-visible{outline:2px solid var(--sea);outline-offset:2px;border-radius:3px}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+
+  header.hero{padding:52px 0 24px}
+  .eyebrow{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--sea-deep)}
+  h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(34px,7.5vw,58px);
+    line-height:1.0;letter-spacing:-.02em;margin:.16em 0 .18em}
+  .lede{font-size:clamp(15px,2.3vw,17.5px);color:var(--ink-soft);max-width:62ch;margin:0}
+  .arc{margin-top:20px;border:1px solid var(--line);border-left:4px solid var(--sea);
+    background:linear-gradient(180deg,rgba(31,110,140,.05),transparent);border-radius:10px;
+    padding:15px 17px;font-size:14.5px;color:var(--ink)}
+  .arc b{font-family:"Bricolage Grotesque",sans-serif}
+
+  nav.jump{position:sticky;top:0;z-index:20;background:rgba(247,242,231,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);margin-top:26px}
+  nav.jump .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 22px}
+  nav.jump a{font-family:"Space Mono",monospace;font-size:12px;white-space:nowrap;padding:6px 11px;
+    border-radius:20px;text-decoration:none;color:var(--ink-soft)}
+  nav.jump a:hover{background:var(--paper-2);color:var(--ink)}
+
+  article{padding:46px 0 6px}
+  .chap-num{font-family:"Space Mono",monospace;font-size:13px;color:var(--sea);font-weight:700}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(25px,4.8vw,36px);
+    letter-spacing:-.015em;margin:.15em 0 .05em;line-height:1.03}
+  .native{font-family:"Space Mono",monospace;font-size:12.5px;color:var(--ink-soft);margin:0 0 18px}
+
+  .facts{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;background:var(--paper-2);box-shadow:var(--shadow);margin:0 0 24px}
+  .facts div{padding:11px 14px;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  .facts div:nth-child(-n+2){border-top:none}
+  .facts div:nth-child(odd){border-left:none}
+  .facts dt{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea);margin:0 0 2px}
+  .facts dd{margin:0;font-size:13.5px;font-weight:500}
+
+  article p{font-size:15.5px;margin:0 0 15px}
+  article p .lead{font-weight:600}
+  h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:18px;margin:26px 0 9px;letter-spacing:-.01em}
+  ul.look{list-style:none;margin:2px 0 16px;padding:0}
+  ul.look li{padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+  ul.look li:first-child{border-top:1px solid var(--line)}
+  ul.look li b{font-family:"Bricolage Grotesque",sans-serif;font-weight:700}
+  .pull{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:clamp(18px,3vw,22px);
+    line-height:1.3;color:var(--sea-deep);border-left:4px solid var(--ochre);padding:4px 0 4px 16px;margin:22px 0}
+  .tip{border:1px solid var(--line);border-left:4px solid var(--ochre);background:linear-gradient(180deg,rgba(208,138,36,.06),transparent);
+    border-radius:10px;padding:14px 16px;font-size:14px;margin:18px 0 6px}
+  .tip b{font-family:"Bricolage Grotesque",sans-serif}
+  .maps{font-family:"Space Mono",monospace;font-size:12px;display:inline-block;margin-top:8px}
+  .maps::before{content:"↳ ";opacity:.6}
+  hr.div{border:none;border-top:1px solid var(--line);margin:36px 0 0}
+
+  footer{padding:40px 0 60px;color:var(--ink-soft);font-size:12.5px;border-top:1px solid var(--line);margin-top:38px}
+
+  @media(max-width:560px){.facts{grid-template-columns:1fr}.facts div{border-left:none!important}
+    .facts div:nth-child(2){border-top:1px solid var(--line)}}
+  @media (prefers-reduced-motion:no-preference){
+    article{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Reiseführer · Montag-Nachmittag</div>
+    <h1>Drei Bauten,<br>zwei Weltbilder</h1>
+    <p class="lede">Palau de la Música, Hospital de Sant Pau und der Mies-Pavillon — an einem Nachmittag lässt sich der Wendepunkt der europäischen Architektur in Zeitlupe erleben: vom überbordenden katalanischen Modernisme zur radikalen Moderne.</p>
+    <div class="arc"><b>Der rote Faden.</b> Palau und Sant Pau stammen beide von <b>Lluís Domènech i Montaner</b> (1850–1923), dem „Vater des Modernisme" und Lehrer von Gaudí. Bei ihm ist Ornament Sprache, das Gebäude ein Gesamtkunstwerk aus Architektur, Skulptur, Glas und Keramik. Der <b>Mies-Pavillon</b> von 1929 formuliert nur zwei Jahrzehnte später die Gegenthese: nicht schmücken, sondern weglassen. Wer die drei nacheinander sieht, sieht zwei konkurrierende Vorstellungen davon, was ein schönes Gebäude ist.</div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Sprungmarken">
+  <div class="wrap">
+    <a href="#palau">Palau de la Música</a>
+    <a href="#santpau">Hospital de Sant Pau</a>
+    <a href="#mies">Mies-Pavillon</a>
+  </div>
+</nav>
+
+<!-- ============ PALAU ============ -->
+<article id="palau">
+  <div class="wrap">
+    <div class="chap-num">01</div>
+    <h2>Palau de la Música Catalana</h2>
+    <p class="native">La Ribera · „Palast der katalanischen Musik"</p>
+
+    <div class="facts">
+      <div><dt>Architekt</dt><dd>Lluís Domènech i Montaner</dd></div>
+      <div><dt>Erbaut</dt><dd>1905–1908 · eingeweiht 9. Feb. 1908</dd></div>
+      <div><dt>Stil</dt><dd>Katalanischer Modernisme</dd></div>
+      <div><dt>Status</dt><dd>UNESCO-Welterbe (1997)</dd></div>
+      <div><dt>Bauherr</dt><dd>Orfeó Català (Chor, gegr. 1891)</dd></div>
+      <div><dt>Besuch</dt><dd>tägl. 9:00–15:30, ~50 min, ab ~20 €</dd></div>
+    </div>
+
+    <h3>Ursprung: ein Chor als Kulturbewegung</h3>
+    <p>Der Palau entstand als Heimstatt des <b>Orfeó Català</b>, eines Bürgerchors, den Lluís Millet und Amadeu Vives 1891 gegründet hatten. Das war weit mehr als ein Gesangsverein: Der Chor wurde zum Motor der <b>Renaixença</b>, der katalanischen kulturellen Wiedergeburt, in einer Zeit, in der die katalanische Sprache und Identität politisch zurückgedrängt wurden. Ein eigenes Konzerthaus war deshalb ein Statement. Finanziert wurde es per öffentlicher Subskription — Spenden der Bürger — ergänzt durch das wohlhabende Industrie-Bürgertum, dasselbe Mäzenatentum, das zuvor schon das Opernhaus Liceu getragen hatte.</p>
+    <p>Den Auftrag erhielt 1905 <b>Domènech i Montaner</b> — Architekt, Politiker und Gelehrter, seit 1875 Lehrer an der Architekturschule, wo zu seinen Schülern Gaudí und Puig i Cadafalch zählten. Er nannte sein Ziel „einen Garten für die Musik".</p>
+
+    <h3>Der Bau: Licht als Baustoff</h3>
+    <p>In nur drei Jahren hochgezogen und am 9. Februar 1908 eingeweiht, ist der Palau technisch ein Coup. Ein sichtbares <b>Stahlskelett</b> trägt das Haus, sodass die Wände zu Glas werden konnten. Das Ergebnis ist der <b>einzige große Konzertsaal Europas, der tagsüber vollständig mit Tageslicht beleuchtet wird</b> — Ingenieurskunst und Ornament sind hier kein Gegensatz, sondern dieselbe Idee. Der Hufeisensaal fasst rund 2.200 Personen.</p>
+
+    <p class="pull">„Ein Garten für die Musik" — Ornament ist hier nicht Dekoration, sondern die eigentliche Sprache des Hauses.</p>
+
+    <h3>Worauf du achten solltest</h3>
+    <ul class="look">
+      <li><b>Das umgekehrte Glas-Oberlicht.</b> Von Antoni Rigalt i Blanch: eine goldgelbe „Sonne", die als gläserne Kugel kopfüber in den Saal hängt, umgeben von blauem Glas mit Dutzenden Frauengesichtern — ein Engelschor am Himmel. Das Herzstück, am schönsten im Vormittagslicht.</li>
+      <li><b>Die 18 Musen der Bühnenrückwand.</b> Unten flach als Mosaik, oben vollplastisch aus der Wand tretend — Musikerinnen mit Instrumenten verschiedener Kulturen und Epochen. Das berühmteste Detail des Saals.</li>
+      <li><b>Wagner gegen die Heimat.</b> Über der Bühne links die Büste Beethovens, darüber der Walkürenritt aus Wagners „Die Walküre" (Domènech war Wagnerianer); rechts Anselm Clavé, der Vater des katalanischen Chorwesens, mit einem Volkslied-Motiv. Fremde Hochkultur und eigene Tradition, bewusst nebeneinandergestellt.</li>
+      <li><b>Pegasus &amp; Orgel.</b> Geflügelte Pferde stürmen auf das Publikum zu; über allem die Walcker-Orgel (1906 in Ludwigsburg gebaut, später elektrifiziert) — heute wieder bespielt.</li>
+      <li><b>Die Rosetten-Säulen.</b> Hunderte floral vermosaikte Säulen an Balkonen und Foyer, keine exakt wie die andere.</li>
+      <li><b>Die Fassade.</b> Büsten der Komponisten Palestrina, Bach, Beethoven und Wagner, dazu das Eck-Skulpturenensemble „La Cançó Popular Catalana" von Miquel Blay und Mosaiken von Lluís Bru.</li>
+    </ul>
+
+    <h3>Was danach geschah</h3>
+    <p>Bürgerkrieg und Franco-Diktatur brachten Schließung und Zweckentfremdung; nach 1975 kehrte der Palau in seine Rolle zurück. 1971 Nationaldenkmal, 1997 UNESCO-Welterbe (gemeinsam mit Sant Pau). Eine große Restaurierung und Erweiterung durch <b>Óscar Tusquets</b> (1982–1989) und der 2004 eröffnete, 11 m unter einem neuen Platz liegende <b>Petit Palau</b> holten das Haus ins Heute. Der Orfeó Català probt und singt bis heute hier.</p>
+
+    <div class="tip"><b>Tipp:</b> Der erste Slot (9:00) hat das schönste Licht und die ruhigste Halle — mit Glück probt ein Chor. Weil der Palau ein aktiver Konzertsaal ist, hängen die Besuchszeiten am Programm; deshalb den Slot vorab online buchen. Keine Garderobe/kein Gepäckservice, also leicht kommen.</div>
+    <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Palau+de+la+M%C3%BAsica+Catalana+Barcelona" target="_blank" rel="noopener">In Google Maps öffnen</a>
+    <hr class="div">
+  </div>
+</article>
+
+<!-- ============ SANT PAU ============ -->
+<article id="santpau">
+  <div class="wrap">
+    <div class="chap-num">02</div>
+    <h2>Recinte Modernista de Sant Pau</h2>
+    <p class="native">Hospital de la Santa Creu i Sant Pau · Guinardó, oberhalb der Sagrada Família</p>
+
+    <div class="facts">
+      <div><dt>Architekt</dt><dd>Domènech i Montaner · vollendet von Pere Domènech i Roura</dd></div>
+      <div><dt>Erbaut</dt><dd>1902–1930</dd></div>
+      <div><dt>Stil</dt><dd>Katalanischer Modernisme</dd></div>
+      <div><dt>Status</dt><dd>UNESCO (1997) · größtes Jugendstil-Ensemble Europas</dd></div>
+      <div><dt>Als Klinik</dt><dd>bis 2009 in Betrieb (Wurzeln bis 1401)</dd></div>
+      <div><dt>Besuch</dt><dd>Sommer bis ~19:00, ~1,5 h</dd></div>
+    </div>
+
+    <h3>Ursprung: ein Vermächtnis aus Paris</h3>
+    <p>Die Institution ist uralt: Ihre Wurzeln reichen bis <b>1401</b> zum Hospital de la Santa Creu, einem gotischen Bau im Raval — eines der ältesten Krankenhäuser Spaniens. Um 1900 war es der wachsenden Stadt und der modernen Medizin nicht mehr gewachsen. Den Ausweg brachte ein Testament: Der in Paris lebende katalanische Bankier <b>Pau Gil i Serra</b> (gest. 1896) vermachte sein Vermögen für ein neues, dem Apostel Paulus gewidmetes Hospital für die Armen — es sollte „das Beste aus Technik, Architektur und Medizin" vereinen. Daher der Name Sant Pau.</p>
+
+    <h3>Die Idee: Architektur als Heiltherapie</h3>
+    <p>Den Auftrag bekam Domènech i Montaner. Er studierte die modernsten Kliniken Europas und die damals neuen Hygiene- und Sanitätslehren — und verwarf den üblichen einzelnen Institutionsblock. Stattdessen entwarf er eine <b>„Gartenstadt" (ciutat-jardí)</b>: freistehende Pavillons, nach Funktion und Krankheitsbild getrennt (ein Isolations- und Hygienekonzept der Zeit), großzügig in Gärten gesetzt, damit Patienten spazieren konnten und sich nicht eingesperrt fühlten. Verbunden ist alles durch rund <b>einen Kilometer unterirdische Tunnel</b>, über die Kranke, Personal und Logistik witterungsgeschützt zirkulierten. Stahlrahmen erlaubten hohe, lichtdurchflutete Gewölbe. Dahinter stand Domènechs Überzeugung, dass Licht, Luft, Grün und Schönheit die Genesung fördern.</p>
+
+    <p class="pull">Für einen Arzt der spannendste Bau der Stadt: ein Krankenhaus, das seine Medizintheorie in Grundriss und Ornament übersetzt.</p>
+
+    <p>Städtebaulich ist die Anlage um 45° gegen das Cerdà-Raster gedreht — für maximales Licht auf die Fassaden — und als Kreuz angelegt, das Emblem des alten Hospital de la Santa Creu. Von den geplanten <b>48 Pavillons</b> wurden 27 gebaut, davon 16 nach dem originalen Modernista-Entwurf, auf einem Areal von 14,5 Hektar (rund neun Eixample-Blocks).</p>
+
+    <h3>Worauf du achten solltest</h3>
+    <ul class="look">
+      <li><b>Der Verwaltungspavillon.</b> Das repräsentative Eingangsgebäude mit Uhrturm und einer opulenten Empfangshalle unter Mosaikgewölben — hier beginnt der Rundgang oberirdisch.</li>
+      <li><b>Die unterirdischen Tunnel.</b> Begehbar; sie machen die Logistik des Pavillonsystems körperlich erfahrbar und führen zwischen den Gebäuden hindurch.</li>
+      <li><b>Der Sant-Salvador-Pavillon.</b> Der erste in Betrieb genommene Bau (ab 1916); heute zeigt eine Inszenierung, wie ein Krankenhaus der 1920er/30er funktionierte.</li>
+      <li><b>Keramik, Mosaik, Skulptur.</b> Glasierte Fliesen in Grün, Blau und Gold, Mosaikfriese (u. a. von Pau Gargallo) und Skulpturen (Eusebi Arnau) — Schmuck als Teil der „Behandlung", nicht als Beiwerk.</li>
+      <li><b>Die Gärten &amp; die Achse zur Sagrada Família.</b> Die Anlage fluchtet über die Avinguda de Gaudí genau auf die Sagrada Família — ein bewusster städtebaulicher Blick zwischen den beiden Modernisme-Ikonen.</li>
+    </ul>
+
+    <h3>Was danach geschah</h3>
+    <p>Nach dem Tod des Vaters vollendete sein Sohn <b>Pere Domènech i Roura</b> das Werk; König Alfons XIII. weihte das Hospital am 16. Januar 1930 ein. Über 100 Jahre blieb Sant Pau Barcelonas Referenzklinik, bis der Betrieb 2009 in einen Neubau am Nordrand des Areals zog. Die historischen Pavillons wurden aufwendig restauriert und 2014 als <b>Recinte Modernista</b> geöffnet; heute beherbergen sie Kultur- und Wissensinstitutionen. Historisch-künstlerisches Denkmal 1978, UNESCO-Welterbe 1997.</p>
+
+    <div class="tip"><b>Tipp:</b> Vom Palau in ~15 min per Metro (Urquinaona → Sant Pau|Dos de Maig). Plane ~1,5 h ein. Der Reiz liegt im Kontrast zwischen nüchterner Krankenhausfunktion und überbordender Ausstattung — und in der frühen, ganzheitlichen Idee vom heilenden Ort. Offen bis abends, also die entspanntere zweite Station.</div>
+    <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Hospital+de+Sant+Pau+Recinte+Modernista+Barcelona" target="_blank" rel="noopener">In Google Maps öffnen</a>
+    <hr class="div">
+  </div>
+</article>
+
+<!-- ============ MIES ============ -->
+<article id="mies">
+  <div class="wrap">
+    <div class="chap-num">03</div>
+    <h2>Pavelló Mies van der Rohe</h2>
+    <p class="native">Barcelona-Pavillon · Montjuïc / Plaça d'Espanya</p>
+
+    <div class="facts">
+      <div><dt>Architekt</dt><dd>Ludwig Mies van der Rohe &amp; Lilly Reich</dd></div>
+      <div><dt>Erbaut</dt><dd>1929 · Rekonstruktion 1983–1986</dd></div>
+      <div><dt>Stil</dt><dd>Klassische Moderne / Internationaler Stil</dd></div>
+      <div><dt>Anlass</dt><dd>Deutscher Pavillon der Weltausstellung 1929</dd></div>
+      <div><dt>Bauherr</dt><dd>Deutsches Reich (Weimarer Republik)</dd></div>
+      <div><dt>Besuch</dt><dd>Sommer bis ~20:00, ~30–45 min, ~12 €</dd></div>
+    </div>
+
+    <h3>Ein Pavillon ohne Inhalt</h3>
+    <p>Der Bau war der <b>deutsche Nationalbeitrag der Weimarer Republik</b> zur Internationalen Ausstellung 1929 auf dem Montjuïc — und er hatte nichts auszustellen. Der einzige „Inhalt" war der offizielle Empfang für das spanische Königspaar Alfons XIII. und Victòria Eugènia sowie deutsche Offizielle. Der Raum selbst war das Exponat: ein Manifest der Moderne. Mies van der Rohes Formeln dazu sind legendär — „<b>weniger ist mehr</b>" und „Gott steckt im Detail".</p>
+
+    <h3>Lilly Reich — die zweite Autorin</h3>
+    <p>Lange lief der Pavillon allein unter Mies' Namen. Die Forschung hat das korrigiert: <b>Lilly Reich</b> war künstlerische Leiterin der gesamten deutschen Sektion der Ausstellung, und ihr Beitrag ist konstitutiv, nicht schmückend. Von ihr stammt der Umgang mit Material, Textil und Farbe — sogar ein versteckter Code: <b>roter Samtvorhang, schwarzer Teppich und goldener Onyx ergeben zusammen die Farben der deutschen Flagge.</b> Dass ihr Name verblasste, hat auch damit zu tun, dass sie im Krieg in Deutschland blieb (und dort Mies' Archiv rettete), während er nach Chicago emigrierte.</p>
+
+    <h3>Der Luxus des Weglassens</h3>
+    <p>Nach Palau und Sant Pau wirkt der Pavillon wie ein Gegengift: keine Erzählung, kein Ornament, nur <b>fließender Raum</b>. Wände stehen frei im Grundriss und lenken die Bewegung, statt Zimmer zu bilden. Der Reichtum liegt nicht im Schmuck, sondern im Material und in der Präzision der Fügung: römischer Travertin, grüner Alpenmarmor, antiker grüner Marmor aus Griechenland und eine frei stehende Wand aus <b>goldenem Onyx</b> aus dem Atlasgebirge, deren Block so gespalten wurde, dass die Maserung ein symmetrisches Muster ergibt und im Licht zu glühen scheint. Dazu getöntes Glas und verchromte Kreuzstützen.</p>
+
+    <h3>Worauf du achten solltest</h3>
+    <ul class="look">
+      <li><b>Die Onyxwand.</b> Das teuerste Material des Baus, bewusst freistehend inszeniert — bei tiefem Nachmittagslicht am eindrucksvollsten.</li>
+      <li><b>Die zwei Wasserbecken.</b> Sie spiegeln den Bau und lösen die Grenze zwischen innen und außen auf — Architektur, die mit Reflexion komponiert (ein Fest für Fotografen).</li>
+      <li><b>„Alba" (Der Morgen).</b> Die Bronzefigur von Georg Kolbe steht im kleinen schwarzen Becken — der einzige figürliche Akzent, präzise gesetzt und im Wasser gedoppelt.</li>
+      <li><b>Der Barcelona-Chair.</b> Von Mies und Reich eigens für den Königsempfang entworfen, formal an den römischen Faltstuhl angelehnt — bis heute Design-Ikone, hier an ihrem Geburtsort.</li>
+    </ul>
+
+    <h3>Das Gebäude, das ein halbes Jahrhundert nicht existierte</h3>
+    <p>Der Pavillon stand nur rund <b>acht Monate</b>. Nach der Ausstellung wurde er 1930 abgebaut, der Stahl nach Gewicht verkauft. Danach wirkte er <b>56 Jahre lang ausschließlich über Schwarz-Weiß-Fotografien</b> weiter — eines der einflussreichsten Gebäude des 20. Jahrhunderts, das die meiste Zeit gar nicht gebaut war. 1980 setzte Oriol Bohigas als Leiter der Stadtplanung die Rekonstruktion in Gang; nach gründlicher Forschung bauten Ignasi de Solà-Morales, Cristian Cirici und Fernando Ramos den Pavillon 1983–1986 originalgetreu am ursprünglichen Ort wieder auf, eröffnet 1986 zu Mies' 100. Geburtstag. Heute betreut ihn die Fundació Mies van der Rohe (die auch den EU-Architekturpreis vergibt). Trotz seines enormen Einflusses zählte er 2024 nur rund 108.000 Besucher — ein Bruchteil der Millionen an der Sagrada Família.</p>
+
+    <div class="tip"><b>Tipp:</b> Klein und schnell (~30–45 min), aber genau deshalb der perfekte Schlusspunkt — als bewusster Kontrast zum Modernisme des Vormittags. Von Sant Pau per L5 zur Plaça d'Espanya. Da du am Montjuïc-Fuß bist, bietet sich der Berg danach für den Sonnenuntergang an (die Bunkers schließen im Sommer schon 19:30).</div>
+    <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Pavell%C3%B3+Mies+van+der+Rohe+Barcelona" target="_blank" rel="noopener">In Google Maps öffnen</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">Barcelona · Reiseführer Modernisme &amp; Moderne · ElRi · Öffnungszeiten &amp; Tickets vor Ort gegenchecken</div>
+</footer>
+
+</body>
+</html>
